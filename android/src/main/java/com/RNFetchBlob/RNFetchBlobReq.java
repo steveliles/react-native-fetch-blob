@@ -654,6 +654,14 @@ public class RNFetchBlobReq extends BroadcastReceiver implements Runnable {
                 // the file exists in media content database
                 if (c.moveToFirst()) {
                     String contentUri = c.getString(c.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
+                    // handle download manager error status code #296
+                    int status = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS));
+                    if(status == DownloadManager.STATUS_FAILED) {
+                        // TODO
+                    }
+                    else if ( status == DownloadManager.STATUS_SUCCESSFUL) {
+                        // TODO
+                    }
                     Uri uri = Uri.parse(contentUri);
                     Cursor cursor = appCtx.getContentResolver().query(uri, new String[]{android.provider.MediaStore.Images.ImageColumns.DATA}, null, null, null);
                     // use default destination of DownloadManager
